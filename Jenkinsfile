@@ -10,7 +10,7 @@ pipeline {
 	stages {
 		stage('Checkout Github'){
 			steps {
-			git branch: 'main', credentialsId: 'GitOps-token-GitHub', url: 'https://github.com/iQuantC/Jenkins-ArgoCD-GitOps.git'
+			git branch: 'main', credentialsId: 'Gitops', url: 'https://github.com/itsmespartan08/Jenkins-ArgoCD-GitOps.git'
 			}
 		}		
 		stage('Install node dependencies'){
@@ -22,14 +22,14 @@ pipeline {
 			steps {
 				script {
 					echo 'building docker image...'
-					dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
+					docker.build("${DOCKER_HUB_REPO}:latest")
 				}
 			}
 		}
 		stage('Trivy Scan'){
 			steps {
-				//sh 'trivy --severity HIGH,CRITICAL --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
-				sh 'trivy --severity HIGH,CRITICAL --skip-update --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
+				sh 'trivy --severity HIGH,CRITICAL --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
+				//sh 'trivy --severity HIGH,CRITICAL --skip-update --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
 			}
 		}
 		stage('Push Image to DockerHub'){
