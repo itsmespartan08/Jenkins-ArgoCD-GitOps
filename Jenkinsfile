@@ -5,7 +5,6 @@ pipeline {
 	}
 	environment {
 		DOCKER_HUB_REPO = 'iquantc/iquant-app'
-		DOCKER_HUB_CREDENTIALS_ID = 'gitops-dockerhub'
 	}
 	stages {
 		stage('Checkout Github'){
@@ -22,7 +21,7 @@ pipeline {
 			steps {
 				script {
 					echo 'building docker image...'
-					dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
+					docker.build("${DOCKER_HUB_REPO}:latest")
 				}
 			}
 		}
