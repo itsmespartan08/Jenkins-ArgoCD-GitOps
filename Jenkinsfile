@@ -5,11 +5,12 @@ pipeline {
 	}
 	environment {
 		DOCKER_HUB_REPO = 'iquantc/iquant-app'
+		DOCKER_HUB_CREDENTIALS_ID = 'gitops-dockerhub'
 	}
 	stages {
 		stage('Checkout Github'){
 			steps {
-			git branch: 'main', credentialsId: 'Gitops', url: 'https://github.com/itsmespartan08/Jenkins-ArgoCD-GitOps.git'
+			git branch: 'main', credentialsId: 'GitOps-token-GitHub', url: 'https://github.com/iQuantC/Jenkins-ArgoCD-GitOps.git'
 			}
 		}		
 		stage('Install node dependencies'){
@@ -21,7 +22,7 @@ pipeline {
 			steps {
 				script {
 					echo 'building docker image...'
-					docker.build("${DOCKER_HUB_REPO}:latest")
+					dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
 				}
 			}
 		}
