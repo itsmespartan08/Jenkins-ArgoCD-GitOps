@@ -4,7 +4,7 @@ pipeline {
 		nodejs 'NodeJS'
 	}
 	environment {
-		DOCKER_HUB_REPO = 'iquantc/iquant-app'
+		DOCKER_HUB_REPO = 'itsmespartan08/node-app'
 		DOCKER_HUB_CREDENTIALS_ID = 'gitops-dockerhub'
 	}
 	stages {
@@ -22,14 +22,14 @@ pipeline {
 			steps {
 				script {
 					echo 'building docker image...'
-					docker.build("${DOCKER_HUB_REPO}:latest")
+					dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
 				}
 			}
 		}
 		stage('Trivy Scan'){
 			steps {
-			      //sh 'trivy --severity HIGH,CRITICAL --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
-			      sh 'trivy --severity HIGH,CRITICAL --skip-db-update --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
+			      sh 'trivy --severity HIGH,CRITICAL --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
+			      //sh 'trivy --severity HIGH,CRITICAL --skip-db-update --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
 			}
 		}
 		stage('Push Image to DockerHub'){
