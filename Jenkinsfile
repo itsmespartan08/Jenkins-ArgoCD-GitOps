@@ -10,7 +10,7 @@ pipeline {
 	stages {
 		stage('Checkout Github'){
 			steps {
-			git branch: 'main', credentialsId: 'GitOpsTenorio', url: 'https://github.com/itsmespartan08/Jenkins-ArgoCD-GitOps.git'
+			git branch: 'main', credentialsId: 'Gitops', url: 'https://github.com/itsmespartan08/Jenkins-ArgoCD-GitOps.git'
 			}
 		}		
 		stage('Install node dependencies'){
