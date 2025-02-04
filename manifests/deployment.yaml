@@ -17,4 +17,5 @@ spec:
         image: itsmespartan08/node-app:latest
         ports:
         - containerPort: 3000
-
+      imagePullSecrets:
+      - name: gitops-dockerhub 
